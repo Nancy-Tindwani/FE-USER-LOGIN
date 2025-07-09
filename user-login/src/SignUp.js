@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Container,
@@ -16,6 +17,7 @@ function SignUp() {
     password: ''
   });
 
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({
     name: '',
     email: '',
@@ -48,6 +50,7 @@ function SignUp() {
         );
         console.log('Registration successful:', response.data);
         alert("Registration successful");
+        navigate('/login');
         // Redirect or clear form
       } catch (error) {
         console.error('Registration error:', error.response?.data || error.message);

@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
@@ -12,8 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -24,13 +22,10 @@ const navigate = useNavigate();
     password: ''
   });
 
-  
-
   const validate = () => {
     let temp = { ...errors };
     temp.email = /\S+@\S+\.\S+/.test(formData.email) ? '' : 'Invalid email';
     temp.password = formData.password ? '' : 'Password is required';
-
     setErrors(temp);
     return Object.values(temp).every(x => x === '');
   };
@@ -49,7 +44,7 @@ const navigate = useNavigate();
         'http://localhost:8081/api/v1/login',
         formData,
         {
-          withCredentials: true, // Send/receive cookies
+          withCredentials: true,
           headers: {
             'Content-Type': 'application/json'
           }
@@ -57,9 +52,8 @@ const navigate = useNavigate();
       );
 
       console.log('Login success:', response.data);
-      // Optional: store token if not using cookies
-      // localStorage.setItem('token', response.data.jwtToken);
-      navigate('/dashboard'); // redirect after login
+      // localStorage.setItem('token', response.data.jwtToken); // Optional
+      navigate('/dashboard');
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message || 'Login failed');
@@ -85,7 +79,7 @@ const navigate = useNavigate();
           <Typography variant="h5" align="center" gutterBottom>
             Sign In
           </Typography>
-          <form  noValidate>
+          <form onSubmit={handleSubmit} noValidate>
             <TextField
               fullWidth
               label="Email"
@@ -113,19 +107,17 @@ const navigate = useNavigate();
               fullWidth
               variant="contained"
               sx={{ mt: 2 }}
-              onClick={()=>handleSubmit()}
             >
               Login
             </Button>
             <Button
-              type="submit"
+              type="button"
               fullWidth
-              variant="contained"
+              variant="outlined"
               sx={{ mt: 2 }}
-              onClick={()=>navigate('/reset-password')}
-
+              onClick={() => navigate('/reset-password')}
             >
-              FORGOT Password
+              Forgot Password
             </Button>
           </form>
         </Box>
